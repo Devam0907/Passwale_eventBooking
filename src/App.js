@@ -1,41 +1,4 @@
-// import React from "react";
-// import Login from "./User/Login";
-// import Registration from "./User/Registration";
-// import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-// import Homepage from "./User/Homepage";
-// import Event from "./User/Event";
-// import Price from "./User/Price";
-// import Feature from "./User/Feature";
-// import Usecases from "./User/Usecases";
-// import CreateEvent from "./CreateEvent";
-// import EventDetails from "./Organizer/Event/EventDetails";
 
-
-// function App() {
-
-//   return (
-//     <div>
-
-//     <Router>
-//       <Routes>
-//         <Route path="/" element={<Homepage />} />
-//         <Route path="/Home" element={<Homepage />} />
-//         <Route path="/login" element={<Login />} />
-//         <Route path="/register" element={<Registration />} />
-//         <Route path="/events" element={<Event />} />
-//         <Route path="/pricing" element={<Price />} />
-//         <Route path="/features" element={<Feature />} />
-//         <Route path="/use-cases" element={<Usecases/>} />
-//         <Route path="/createEvent" element={<CreateEvent/>} />
-//         <Route path="/event-details" element={<EventDetails/>} />
-
-//       </Routes>
-//     </Router>
-//     </div>
-//   );
-// }
-
-// export default App;
 
 import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
