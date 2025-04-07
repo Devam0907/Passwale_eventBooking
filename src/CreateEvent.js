@@ -282,25 +282,62 @@ const CreateEvent = () => {
     joinURL: "",
   });
 
+  // const [errorMessage, setErrorMessage] = useState("");
+  // const [openSnackbar, setOpenSnackbar] = useState(false);
+
+  // const handleChange = (e) => {
+  //   setFormData({ ...formData, [e.target.name]: e.target.value });
+  // };
+
+  // const formatDateRange = (start, end) => {
+  //   if (!start || !end) return "";
+  //   const startDate = new Date(start);
+  //   const endDate = new Date(end);
+
+  //   if (isSameDay(startDate, endDate)) {
+  //     return format(startDate, "MMM d, yyyy");
+  //   } else if (isSameYear(startDate, endDate)) {
+  //     return `${format(startDate, "MMM d")} - ${format(endDate, "MMM d, yyyy")}`;
+  //   } else {
+  //     return `${format(startDate, "MMM d, yyyy")} - ${format(endDate, "MMM d, yyyy")}`;
+  //   }
+  // };
+
+  // const validateForm = () => {
+  //   const { eventName, startDate, endDate, eventType, eventMode, venue, country, state, city, joinURL } = formData;
+
+  //   if (!eventName || !startDate || !endDate || !eventType || !eventMode) {
+  //     return "Please fill all required fields.";
+  //   }
+
+  //   if (eventMode === "In-Person" && (!venue || !country || !state || !city)) {
+  //     return "Please fill venue details for In-Person events.";
+  //   }
+
+  //   if (eventMode === "Online" && !joinURL) {
+  //     return "Please provide a valid Join URL for Online events.";
+  //   }
+
+  //   return null;
+  // };
+
+  // const handleCreateEvent = () => {
+  //   const validationMessage = validateForm();
+
+  //   if (validationMessage) {
+  //     setErrorMessage(validationMessage);
+  //     setOpenSnackbar(true);
+  //   } else {
+  //     navigate("/event-details");
+  //   }
+  // };
+
+
   const [errorMessage, setErrorMessage] = useState("");
   const [openSnackbar, setOpenSnackbar] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const formatDateRange = (start, end) => {
-    if (!start || !end) return "";
-    const startDate = new Date(start);
-    const endDate = new Date(end);
-
-    if (isSameDay(startDate, endDate)) {
-      return format(startDate, "MMM d, yyyy");
-    } else if (isSameYear(startDate, endDate)) {
-      return `${format(startDate, "MMM d")} - ${format(endDate, "MMM d, yyyy")}`;
-    } else {
-      return `${format(startDate, "MMM d, yyyy")} - ${format(endDate, "MMM d, yyyy")}`;
-    }
   };
 
   const validateForm = () => {
@@ -440,33 +477,33 @@ const CreateEvent = () => {
             </Box>
           )}
 
-          {/* Ticket Preview Section */}
-          <Divider sx={{ my: 3 }} />
-          <Typography variant="h6" sx={{ mb: 2 }}>
-            Tickets
-          </Typography>
-
-          <Card sx={{ mb: 2 }}>
-            <CardContent>
-              <Typography variant="subtitle1">
-                {formData.eventName || "Community Ticket"}
+{formData.eventType && (
+            <Box sx={{ mt: 3 }}>
+              <Typography variant="h6" gutterBottom>
+                Tickets
               </Typography>
+              <Card variant="outlined" sx={{ mb: 2 }}>
+                <CardContent>
+                  <Typography variant="body1" fontWeight="bold">
+                    Community Ticket
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    {format(formData.startDate, 'MMM d')} - {format(formData.endDate, 'MMM d, y')}
+                  </Typography>
+                  <Typography variant="body2">
+                    Type: {formData.eventType} Ticket
+                  </Typography>
+                  <Typography variant="body2" color="error">
+                    Sold Out
+                  </Typography>
+                </CardContent>
+              </Card>
+              <Divider sx={{ my: 2 }} />
               <Typography variant="body2" color="text.secondary">
-                {formatDateRange(formData.startDate, formData.endDate)}
+                New Ticket
               </Typography>
-              <Typography variant="body2" color="text.secondary">
-                {formData.eventType ? `${formData.eventType} Ticket` : "Select Ticket Type"}
-              </Typography>
-              <Typography variant="body2" color="error">
-                Sold Out
-              </Typography>
-            </CardContent>
-          </Card>
-
-          <Divider />
-          <Typography variant="body2" sx={{ mt: 1, color: "text.secondary" }}>
-            New Ticket
-          </Typography>
+            </Box>
+          )}
 
           <Grid container justifyContent="flex-end">
             <Grid item>
