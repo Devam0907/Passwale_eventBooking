@@ -1,0 +1,56 @@
+.Navbar {
+    background-color: #002366 !important;
+    color: white;
+    box-shadow: none;
+  }
+  .Navbar .Logo {
+    color: white !important;
+    font-weight: bold;
+    text-decoration: none;
+  }
+  
+  .Toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .Logo {
+    text-decoration: none; 
+    color: inherit; 
+    cursor: pointer;
+    font-weight: bold; 
+  }
+  
+  .Nav-links {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .Nav-item {
+    color: white !important;
+    font-size: 1rem;
+    transition: color 0.3s;
+  }
+  
+  .Nav-item:hover {
+    color: #f8b400 !important;
+  }
+  
+  .host-button {
+    background-color: #f8b400 !important;
+    color: white !important;
+    font-weight: bold;
+  }
+  
+  .Login {
+    cursor: pointer;
+    margin-left: 10px;
+    color: white !important;
+  }
+  .Register {
+    cursor: pointer;
+    margin-left: 10px;
+    color: white !important;
+  }
+  

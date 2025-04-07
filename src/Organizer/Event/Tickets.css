@@ -1,0 +1,73 @@
+.tickets-containerT {
+  padding: 24px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.main-titleT {
+  font-weight: 600;
+  margin-bottom: 32px;
+  color: #1a1a1a;
+}
+
+.settings-containerT {
+  background-color: #f8f9fa;
+  padding: 24px;
+  border-radius: 8px;
+}
+
+.settings-titleT {
+  font-weight: 500;
+  margin-bottom: 20px;
+  color: #4a4a4a;
+}
+
+.create-category-paperT {
+  padding: 16px;
+  margin-bottom: 24px;
+  background-color: white;
+  border: 1px solid #e0e0e0;
+}
+
+.ticket-categoryT {
+  padding: 16px;
+  margin-bottom: 16px;
+  background-color: white;
+  border: 1px solid #e0e0e0;
+}
+
+.category-nameT {
+  display: block;
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+
+.date-rangeT {
+  color: #6b6b6b;
+  font-size: 0.75rem;
+}
+
+.new-ticket-btnT {
+  background-color: #1976d2;
+  color: white;
+  text-transform: none;
+  font-weight: 500;
+  padding: 6px 16px;
+}
+
+.new-ticket-btnT:hover {
+  background-color: #1565c0;
+}
+
+.sold-out-chipT {
+  background-color: #ffebee;
+  color: #c62828;
+  font-weight: 500;
+  float: right;
+}
+
+.status-containerT {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}

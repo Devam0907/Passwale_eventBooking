@@ -1,0 +1,88 @@
+/* EventDetail.css */
+
+/* Outer container */
+.eventD-container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+  }
+  
+  /* Tabs styling */
+  .eventD-tabs {
+    border-bottom: 2px solid #814b66;
+  }
+  
+  /* Form section */
+  .eventD-form {
+    padding: 20px;
+  }
+  
+  /* Flexbox for input groups */
+  .inputD-group {
+    display: flex;
+    gap: 20px;
+  }
+  
+  /* Full width input fields */
+  .fullD-width {
+    width: 100%;
+    
+  }
+  
+  /* Upload image section */
+  .upload-sectionD {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 20px;
+  }
+  
+  /* Buttons */
+  .buttonD-group {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+  }
+  
+  .cancel-btnD {
+    color: #814b66;
+  }
+  
+  .save-btnD {
+    background-color: #814b66;
+    color: white;
+  }
+  
+  .save-btnD:hover {
+    background-color: #6a3d55;
+  }
+  
+/* Ensure tab labels are always visible */
+.tab-labelD {
+  font-size: 16px;
+  font-weight: bold;
+  color: #814b66;
+}
+
+/* Ensure radio button labels are visible */
+.radio-labelD {
+  font-size: 16px;
+  color: #814b66;
+}
+
+/* Ensure text field labels are always visible */
+.MuiInputLabel-root {
+  color: #814b66 !important;
+}
+
+.Mui-focused .MuiInputLabel-root {
+  color: #6a3d55 !important;
+}
+
+/* Ensure tab labels are not hidden */
+.MuiTabs-root .MuiTab-root {
+  opacity: 1;
+}

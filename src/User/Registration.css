@@ -1,0 +1,44 @@
+
+
+ .Background1 {
+  background: #ADA996; 
+  background: -webkit-linear-gradient(to right, #EAEAEA, #DBDBDB, #F2F2F2, #ADA996); 
+  background: linear-gradient(to right, #EAEAEA, #DBDBDB, #F2F2F2, #ADA996); 
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.Registration-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.Registration-card {
+  box-shadow: 10px 4px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  background-color: white;
+}
+
+.Registration-title {
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.Registration-button {
+  margin-top: 10px;
+  background-color: #1976D2;
+  color: white;
+  transition: 0.3s;
+}
+
+.Registration-button:hover {
+  background-color: #1565C0;
+}
+
+.Error-Alert {
+  margin-top: 10px;
+}

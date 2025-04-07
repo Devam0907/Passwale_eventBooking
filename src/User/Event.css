@@ -1,0 +1,45 @@
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f8f9fa;
+  margin: 0;
+  padding: 0;
+}
+
+.event-container1 {
+  margin-top: 80px;
+  /* text-align: center; */
+  padding: 20px 0;
+}
+
+.event-title1 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 30px;
+}
+
+.event-card1 {
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.event-card1 img {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+/* .event-card .MuiCardContent-root {
+  text-align: center;
+} */
+
+.event-card1 .MuiTypography-h6 {
+  font-weight: bold;
+}
+
+.event-card1 .MuiCardActions-root {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 15px;
+}

@@ -1,0 +1,154 @@
+/* Overview Container */
+.overview-containerO {
+    padding: 20px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  /* Title */
+  .overview-titleO {
+    font-size: 24px;
+    font-weight: bold;
+    color: #4B174E;
+  }
+  
+  /* Top Section */
+  .top-sectionO {
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  
+  /* Event Transactions */
+  .event-transactionsO {
+    width: 65%;
+    min-height: 250px; /* Adjusted for exact match */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: white;
+  }
+  
+  .card-titleO {
+    font-weight: bold;
+    color: #4B174E;
+  }
+  
+  .card-subtitleO {
+    color: #666;
+    font-size: 14px;
+  }
+  
+  .empty-dataO {
+    text-align: center;
+    margin-top: 40px;
+    color: #999;
+  }
+  
+  /* Stats Boxes */
+  .stats-boxesO {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+  }
+  
+  .stats-cardO {
+    width: 160px;
+    height: 80px;  /* Fixed height */
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 10px;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+    background: white;
+  }
+  
+  /* Bottom Section */
+  .bottom-sectionO {
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  
+  /* Recent Transactions */
+  .recent-transactionsO {
+    width: 65%;
+    min-height: 180px; /* Match exact height */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: white;
+  }
+  
+  .transactions-headerO {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .view-all-btnO {
+    background: #D32F2F;
+    color: white;
+    text-transform: none;
+    padding: 5px 15px;
+    font-size: 12px;
+  }
+  
+  /* Tickets Status */
+  .tickets-statusO {
+    width: 35%;
+    min-height: 180px; /* Match exact height */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: white;
+  }
+  
+  .ticket-headerO {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .ticket-countO {
+    background: #4B174E;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-weight: bold;
+  }
+  
+  .ticket-typeO {
+    display: flex;
+    align-items: center;
+    color: #4B174E;
+    font-weight: bold;
+  }
+  
+  .external-iconO {
+    font-size: 14px;
+    margin-left: 5px;
+  }
+  
+  /* Progress Bar */
+  .progress-barO {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: 10px;
+  }
+  
