@@ -9,8 +9,11 @@ function Sidebar() {
 
   return (
     <nav className="sidebarS">
+          <div className="sidebar-logo">
+        <img src="/path-to-your-logo.png" alt="Company Logo" />
+      </div>
       <ul>
-        <li><Link to="/"><MdDashboard className="iconS" /> Overview</Link></li>
+        <li><Link to="/overview"><MdDashboard className="iconS" /> Overview</Link></li>
         <li><Link to="/analytics"><FaChartLine className="iconS" /> Analytics</Link></li>
 
         {/* Event Info with Enhanced Dropdown */}

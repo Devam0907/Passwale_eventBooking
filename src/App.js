@@ -12,7 +12,7 @@ import ConferencesA from "./Admin/ConferencesA";
 import UsersA from "./Admin/UsersA";
 import SettingsA from "./Admin/SettingsA";
 
-// User & Organizer components
+// User  components
 import Homepage from "./User/Homepage";
 import Login from "./User/Login";
 import Registration from "./User/Registration";
@@ -21,6 +21,9 @@ import Price from "./User/Price";
 import Feature from "./User/Feature";
 import Usecases from "./User/Usecases";
 import CreateEvent from "./CreateEvent";
+
+// Organizer components
+import Overview from "./Organizer/Overview";
 import EventDetails from "./Organizer/Event/EventDetails";
 import Tickets from "./Organizer/Event/Tickets";
 import OrganizerDetails from "./Organizer/Event/OrganizerDetails";
@@ -36,6 +39,8 @@ import Developers from "./Organizer/Developers";
 import Credits from "./Organizer/Credits";
 import OrganizerSettings from "./Organizer/Settings";
 import Sidebar from "./Organizer/Sidebar";
+import Analytics from "./Organizer/Analytics";
+
 
 import "./App.css";
 
@@ -63,7 +68,7 @@ function MainContent({ darkMode, setDarkMode }) {
 
   const adminRoutes = ["/admin", "/conferences", "/admin-users", "/admin-settings"];
   const organizerRoutes = [
-    "/event-details", "/tickets", "/organizer-details", "/speaker", "/sponsors",
+    "/analytics","/overview","/event-details", "/tickets", "/organizer-details", "/speaker", "/sponsors",
     "/participants", "/contact-attendees", "/team", "/gamification", "/post-event",
     "/advanced", "/developers", "/credits", "/settings"
   ];
@@ -107,7 +112,9 @@ function MainContent({ darkMode, setDarkMode }) {
           <Route path="/createEvent" element={<CreateEvent />} />
 
           {/* Organizer Routes */}
+          <Route path="/overview" element={<Overview />} />
           <Route path="/event-details" element={<EventDetails />} />
+          <Route path="/analytics" element={<Analytics />} />
           <Route path="/tickets" element={<Tickets />} />
           <Route path="/organizer-details" element={<OrganizerDetails />} />
           <Route path="/speaker" element={<Speaker />} />

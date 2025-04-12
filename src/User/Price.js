@@ -1,6 +1,3 @@
-
-
-
 import React from "react";
 import "./Price.css";
 import { Grid, Card, CardContent, Button, Typography } from "@mui/material";

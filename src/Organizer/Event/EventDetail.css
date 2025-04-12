@@ -60,12 +60,32 @@
     background-color: #6a3d55;
   }
   
-/* Ensure tab labels are always visible */
-.tab-labelD {
-  font-size: 16px;
-  font-weight: bold;
-  color: #814b66;
+/* Remove tab underline */
+.eventD-tabs .MuiTabs-indicator {
+  display: none;
 }
+
+/* Tab label styles - now with bold text */
+.tab-labelD {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: bold; /* Makes all tab text bold */
+}
+
+/* Default tab state - bold black */
+.eventD-tabs .MuiTab-root {
+  color: #000000;
+  text-transform: none;
+  opacity: 1;
+  font-weight: bold; /* Ensures the bold is applied */
+}
+
+/* Selected tab state - bold navy blue */
+.eventD-tabs .Mui-selected .tab-labelD {
+  color: #001F3F;
+  /* No need for font-weight here since it's inherited from .tab-labelD */
+}
+
 
 /* Ensure radio button labels are visible */
 .radio-labelD {
