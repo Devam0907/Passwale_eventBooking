@@ -1,10 +1,20 @@
 
-
+/* 
  .Background1 {
   background: #ADA996; 
   background: -webkit-linear-gradient(to right, #EAEAEA, #DBDBDB, #F2F2F2, #ADA996); 
   background: linear-gradient(to right, #EAEAEA, #DBDBDB, #F2F2F2, #ADA996); 
   height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+} */
+
+.Background1 {
+  background-image: url('./Login.jpg'); /* Replace with actual image path */
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;

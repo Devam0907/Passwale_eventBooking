@@ -196,6 +196,64 @@ const CreateEvent = () => {
             </Select>
           </FormControl>
 
+                  {formData.eventMode === "In-Person" && (
+            <Box sx={{ mt: 3 }}>
+              <FormControl fullWidth sx={{ mb: 3 }}>
+                <TextField 
+                  label="Venue *" 
+                  variant="outlined" 
+                  name="venue" 
+                  value={formData.venue} 
+                  onChange={handleChange} 
+                />
+              </FormControl>
+
+              <Grid container spacing={3} sx={{ mb: 3 }}>
+                <Grid item xs={12} sm={4}>
+                  <FormControl fullWidth>
+                    <InputLabel>Country *</InputLabel>
+                    <Select name="country" value={formData.country} onChange={handleChange}>
+                      <MenuItem value="India">India</MenuItem>
+                    </Select>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12} sm={4}>
+                  <FormControl fullWidth>
+                    <InputLabel>State *</InputLabel>
+                    <Select name="state" value={formData.state} onChange={handleChange}>
+                      <MenuItem value="Gujarat">Gujarat</MenuItem>
+                    </Select>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12} sm={4}>
+                  <FormControl fullWidth>
+                    {/* <TextField label="City *" value={formData.city}  */}
+                    <InputLabel>City *</InputLabel>
+                    <Select name="city" value={formData.city} onChange={handleChange}>
+                      <MenuItem value="Gujarat">Ahmedabad</MenuItem>
+                      </Select>
+                      </FormControl>
+                </Grid>
+              </Grid>
+            </Box>
+          )}
+
+          {formData.eventMode === "Online" && (
+            <Box sx={{ mt: 3 }}>
+              <FormControl fullWidth sx={{ mb: 3 }}>
+                <TextField 
+                  label="Join URL *" 
+                  variant="outlined" 
+                  name="joinURL" 
+                  value={formData.joinURL} 
+                  onChange={handleChange} 
+                  placeholder="https://example.com/join" 
+                />
+              </FormControl>
+            </Box>
+          )}
+
+
           {/* Tickets Section */}
           {formData.eventType && (
             <Box sx={{ mt: 3 }}>

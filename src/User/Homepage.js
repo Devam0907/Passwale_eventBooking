@@ -14,8 +14,8 @@ function Homepage() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentIndex(prev => (prev + 1) % 6); // Assuming you have 6 items
-    }, 4000); // 4 seconds
+      setCurrentIndex(prev => (prev + 1) % 6); 
+    }, 4000); 
   
     return () => clearInterval(interval);
   }, []);
@@ -25,7 +25,6 @@ function Homepage() {
     <div className="Homepage">
       <Navbar />
 
-      {/* Hero Section */}
       <Container className="Hero-section">
         <Box className="Hero-content" textAlign="center">
           <Typography variant="h3" className="Hero-title" gutterBottom>
@@ -50,7 +49,6 @@ function Homepage() {
             The ultimate event management solution with everything you need in one place.
           </Typography>
           
-          {/* <Container className="Rotating-container"> */}
   <Box className="Rotating-outer-box">
     <Box className="Rotating-sidebar2">
       <List>
@@ -85,7 +83,7 @@ function Homepage() {
           <CardMedia
             component="img"
             className="Rotating-image"
-            image="virtual-conf.png"
+            image="virtual.jpg"
             alt="Virtual Conference Platform"
           />
         </>
@@ -100,7 +98,7 @@ function Homepage() {
           <CardMedia
             component="img"
             className="Rotating-image"
-            image="image2.jpeg"
+            image="speaker.jpg"
             alt="Speaker Management"
           />
         </>
@@ -115,7 +113,7 @@ function Homepage() {
           <CardMedia
             component="img"
             className="Rotating-image"
-            image="image1.jpg"
+            image="Attedance.jpg"
             alt="Attendee Registration System"
           />
         </>
@@ -130,7 +128,7 @@ function Homepage() {
           <CardMedia
             component="img"
             className="Rotating-image"
-            image="analytics-dash.png"
+            image="EventAnalgtics.jpg"
             alt="Event Analytics Dashboard"
           />
         </>
@@ -145,7 +143,7 @@ function Homepage() {
           <CardMedia
             component="img"
             className="Rotating-image"
-            image="sponsor-mgmt.png"
+            image="sponer.jpg"
             alt="Sponsor Management Suite"
           />
         </>
@@ -160,7 +158,7 @@ function Homepage() {
           <CardMedia
             component="img"
             className="Rotating-image"
-            image="mobile-app.png"
+            image="Mobile.jpg"
             alt="Mobile Event App"
           />
         </>

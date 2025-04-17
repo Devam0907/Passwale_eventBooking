@@ -1,0 +1,134 @@
+/* ---- MAIN PAGE STYLES ---- */
+
+.sponsors-wrapper {
+    max-width: 900px;
+    margin: 40px auto;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    color: #3f003f;
+    padding: 20px;
+  }
+  
+  /* Field Groups */
+  .field-group {
+    margin-bottom: 30px;
+  }
+  
+  .label-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+  }
+  
+  .field-label {
+    font-weight: 600;
+    font-size: 14px;
+  }
+  
+  .required {
+    color: red;
+    margin-left: 3px;
+  }
+  
+  .input-field,
+  .description-textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+  }
+  
+  .input-field:focus,
+  .description-textarea:focus {
+    border-color: #aa66cc;
+  }
+  
+  .char-limit {
+    font-size: 12px;
+    color: gray;
+  }
+  
+  .desc-footer {
+    margin-top: 5px;
+    font-size: 12px;
+    color: gray;
+    text-align: right;
+  }
+  
+  /* Action Buttons */
+  .action-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin: 20px 0;
+  }
+  
+  .cancel-button,
+  .save-button {
+    padding: 8px 16px;
+    font-weight: 600;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .cancel-button {
+    background-color: #fff;
+    color: #3f003f;
+    border: 1px solid #ccc;
+  }
+  
+  .save-button {
+    background-color: #5d3b5d;
+    color: #fff;
+  }
+  
+  /* Sponsors List */
+  .sponsor-list-section {
+    margin-top: 30px;
+  }
+  
+  .sponsor-list-title {
+    font-weight: 600;
+    margin-bottom: 10px;
+    font-size: 16px;
+  }
+  
+  .no-sponsors {
+    color: gray;
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+  }
+  
+  /* Bottom Buttons */
+  .bottom-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+    margin-top: 30px;
+  }
+  
+  .add-sponsor-button,
+  .create-category-button {
+    padding: 10px 20px;
+    font-weight: 600;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    border: none;
+  }
+  
+  .add-sponsor-button {
+    background-color: #d32f2f;
+    color: #fff;
+  }
+  
+  .create-category-button {
+    background-color: #fff;
+    color: #3f003f;
+    border: 1px solid #ccc;
+  }
+  

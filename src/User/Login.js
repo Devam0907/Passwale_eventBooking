@@ -26,7 +26,7 @@ const Login = () => {
     password: "",
   });
   const [openForgotPassword, setOpenForgotPassword] = useState(false);
-  const [forgotEmail, setForgotEmail] = useState("");
+  const [forgotEmail, setForgotEmail] = useState(""); 
 
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleMouseDownPassword = (event) => event.preventDefault();

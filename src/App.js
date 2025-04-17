@@ -29,15 +29,14 @@ import Tickets from "./Organizer/Event/Tickets";
 import OrganizerDetails from "./Organizer/Event/OrganizerDetails";
 import Speaker from "./Organizer/Event/Speaker";
 import Sponsors from "./Organizer/Event/Sponsors";
-import Participants from "./Organizer/Participants";
-import ContactAttendees from "./Organizer/ContactAttendees";
-import Team from "./Organizer/Team";
-import Gamification from "./Organizer/Gamification";
-import PostEvent from "./Organizer/PostEvent";
+import Participants from "./Organizer/Participants";  
+// import ContactAttendees from "./Organizer/ContactAttendees";
+// import Team from "./Organizer/Team";
+// import Gamification from "./Organizer/Gamification";
+import Feedback from "./Organizer/Feedback";
 import Advanced from "./Organizer/Advanced";
-import Developers from "./Organizer/Developers";
+// import Developers from "./Organizer/Developers";
 import Credits from "./Organizer/Credits";
-import OrganizerSettings from "./Organizer/Settings";
 import Sidebar from "./Organizer/Sidebar";
 import Analytics from "./Organizer/Analytics";
 
@@ -68,9 +67,14 @@ function MainContent({ darkMode, setDarkMode }) {
 
   const adminRoutes = ["/admin", "/conferences", "/admin-users", "/admin-settings"];
   const organizerRoutes = [
-    "/analytics","/overview","/event-details", "/tickets", "/organizer-details", "/speaker", "/sponsors",
-    "/participants", "/contact-attendees", "/team", "/gamification", "/post-event",
-    "/advanced", "/developers", "/credits", "/settings"
+    "/analytics","/overview","/event-details",
+     "/tickets", "/organizer-details", "/speaker", "/sponsors",
+    "/participants", 
+    // "/contact-attendees", 
+    // "/team", "/gamification",  "/developers"
+    "/feedback",
+    "/advanced",
+    , "/credits"
   ];
 
   const isAdminRoute = adminRoutes.includes(location.pathname);
@@ -120,14 +124,13 @@ function MainContent({ darkMode, setDarkMode }) {
           <Route path="/speaker" element={<Speaker />} />
           <Route path="/sponsors" element={<Sponsors />} />
           <Route path="/participants" element={<Participants />} />
-          <Route path="/contact-attendees" element={<ContactAttendees />} />
-          <Route path="/team" element={<Team />} />
-          <Route path="/gamification" element={<Gamification />} />
-          <Route path="/post-event" element={<PostEvent />} />
+          {/* <Route path="/contact-attendees" element={<ContactAttendees />} /> */}
+          {/* <Route path="/team" element={<Team />} />
+          <Route path="/gamification" element={<Gamification />} /> */}
+          <Route path="/feedback" element={<Feedback />} />
           <Route path="/advanced" element={<Advanced />} />
-          <Route path="/developers" element={<Developers />} />
+          {/* <Route path="/developers" element={<Developers />} /> */}
           <Route path="/credits" element={<Credits />} />
-          <Route path="/settings" element={<OrganizerSettings />} />
         </Routes>
       </div>
     </div>

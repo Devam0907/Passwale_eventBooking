@@ -1,0 +1,160 @@
+/* Page Wrapper */
+.credits-page {
+  display: flex;
+  justify-content: center;
+  padding: 40px 20px;
+  background: #f0f2f5;
+  min-height: 100vh;
+}
+
+/* Main Card */
+.credits-container {
+  background-color: #fff;
+  width: 100%;
+  max-width: 900px;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+/* Title */
+.credits-title {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #4b0c3b;
+}
+
+/* Tabs */
+.tabs {
+  display: flex;
+  gap: 20px;
+  border-bottom: 2px solid #eee;
+  margin-bottom: 20px;
+}
+
+.tab {
+  padding: 10px 15px;
+  cursor: pointer;
+  color: #555;
+  font-weight: 500;
+}
+
+.tab.active {
+  color: #4b0c3b;
+  border-bottom: 3px solid #4b0c3b;
+  font-weight: 600;
+}
+
+/* Credit Info */
+.credits-info {
+  text-align: right;
+  font-weight: 500;
+  color: green;
+  margin-bottom: 20px;
+}
+
+/* Tab Layouts */
+.tab-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.info-section {
+  flex: 1;
+  min-width: 250px;
+}
+
+.info-section h4 {
+  margin: 15px 0 5px;
+  font-size: 16px;
+  color: #333;
+}
+
+.info-section p {
+  font-size: 14px;
+  color: #555;
+  margin: 3px 0;
+}
+
+.form-section {
+  flex: 1;
+  min-width: 250px;
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.form-section input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 6px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.btn {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.btn.cancel {
+  background-color: #fff;
+  border: 1px solid #4b0c3b;
+  color: #4b0c3b;
+}
+
+.btn.request {
+  background-color: #4b0c3b;
+  color: white;
+}
+
+.note {
+  display: block;
+  margin-top: 5px;
+  font-size: 12px;
+  color: #888;
+}
+
+/* Usage Box */
+.usage-tab {
+  flex-direction: column;
+}
+
+.usage-box {
+  background: #fafafa;
+  padding: 15px 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  font-weight: 500;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.usage-box span {
+  color: #4b0c3b;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* Empty Message */
+.empty-msg {
+  text-align: center;
+  color: #777;
+  margin-top: 30px;
+  font-size: 14px;
+}

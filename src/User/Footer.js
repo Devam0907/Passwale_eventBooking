@@ -11,7 +11,9 @@ function Footer() {
   <Container>
     <Grid container spacing={3} className="Footer-container">
       <Grid item xs={12} sm={4} className="Footer-Section">
-        <Typography variant="h6">LOGO</Typography>
+        <Typography variant="h6">
+          PASSWALE
+          </Typography>
         <Typography variant="body2">Event management & ticketing solutions.</Typography>
       </Grid>
 

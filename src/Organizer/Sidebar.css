@@ -13,6 +13,33 @@
   box-shadow: 4px 0 10px rgba(0, 0, 0, 0.3);
 }
 
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem 1rem;
+  background: transparent;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Logo Image Styling */
+.sidebar-logo img {
+  width: 160px; /* Fixed width */
+  height: auto;
+  transition: all 0.3s ease;
+  user-select: none;
+}
+
+/* Hover Effects */
+.sidebar-logo:hover img {
+  transform: scale(1.02);
+  opacity: 0.9;
+}
+
+/* Active State */
+.sidebar-logo:active img {
+  transform: scale(0.98);
+}
 /* Sidebar Items */
 .sidebarS ul {
   list-style: none;

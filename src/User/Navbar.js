@@ -10,7 +10,7 @@ function Navbar() {
            <AppBar position="fixed" className="Navbar" color="default" elevation={1}>
         <Toolbar className="Toolbar">
           <Typography variant="h6" className="Logo" component={Link} to="/">
-            LOGO
+            PASSWALE
           </Typography>
 
           <div className="Nav-links">

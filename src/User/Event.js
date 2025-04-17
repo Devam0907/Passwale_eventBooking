@@ -12,19 +12,19 @@ import Footer from "./Footer";
 const events = [
   { 
     title: "React Conference 2024", 
-    image: "/lock.jpg", 
+    image: "/React.jpeg",  // Updated URL here
     type: "Conference", 
     description: `The React Conference 2024 is one of the most anticipated events for developers worldwide. It brings together React enthusiasts, industry experts, and top engineers to discuss the latest advancements in React, front-end development, and JavaScript. The conference will feature keynote sessions by React core team members, hands-on workshops, and panel discussions. Topics will include server-side rendering, performance optimization, state management, and integrating React with AI-powered applications. Whether you're a beginner or an experienced developer, this event will provide invaluable insights and networking opportunities to help you grow in the industry. Attendees will also get access to exclusive resources, open-source projects, and career-enhancing workshops led by top software engineers.` 
   },
   { 
     title: "JavaScript Meetup", 
-    image: "/image3.jpeg", 
+    image: "/JS.jpeg", 
     type: "Meetup", 
     description: `The JavaScript Meetup is a gathering of web developers, software engineers, and coding enthusiasts who share a passion for JavaScript. This meetup provides a platform for developers to network, learn new skills, and collaborate on exciting projects. Topics covered include modern ES6+ features, frameworks like React, Vue, and Angular, and best practices for writing efficient JavaScript code. Participants can engage in live coding sessions, Q&A panels with industry experts, and hands-on coding challenges. Whether you’re a beginner exploring JavaScript or a seasoned developer looking for advanced discussions, this meetup offers something for everyone. Attendees will leave with new knowledge, fresh ideas, and valuable connections that can shape their careers in software development.` 
   },
   { 
     title: "AI & ML Summit", 
-    image: "/image2.jpeg", 
+    image: "/Summit.JPEG", 
     type: "Summit", 
     description: `The AI & ML Summit is a high-profile event designed to bring together researchers, engineers, and business leaders from the fields of artificial intelligence and machine learning. This summit will explore cutting-edge advancements in deep learning, neural networks, natural language processing, and AI ethics. Leading experts from top tech companies and universities will share insights on the future of AI-driven applications, including healthcare, finance, and autonomous systems. The event will feature interactive workshops, keynote speeches, and networking sessions. Attendees will have the opportunity to gain hands-on experience with AI tools, understand the latest industry trends, and discuss the challenges and opportunities that AI presents. If you’re passionate about AI and its transformative impact, this summit is a must-attend event.` 
   }

@@ -19,7 +19,7 @@ const Usecases = () => {
         <br />
 
         <div className="usecase-itemU left">
-          <img src="/lock.jpg" alt="Workshops, Trainings & Hackathons" className="usecase-imageU" />
+          <img src="/Workshop.jpeg" alt="Workshops, Trainings & Hackathons" className="usecase-imageU" />
           <div className="usecase-contentU">
             <h3>Workshops, Trainings & Hackathons</h3>
             <p className="text-style-1">
@@ -39,7 +39,7 @@ const Usecases = () => {
         </div>
 
         <div className="usecase-itemU right">
-          <img src="/image2.jpeg" alt="Networking Events" className="usecase-imageU" />
+          <img src="/Network.jpg" alt="Networking Events" className="usecase-imageU" />
           <div className="usecase-contentU">
             <h3>Networking Events</h3>
             <p className="text-style-2">
@@ -58,7 +58,7 @@ const Usecases = () => {
         </div>
 
         <div className="usecase-itemU left">
-          <img src="/lock.jpg" alt="Conferences & Summits" className="usecase-imageU" />
+          <img src="/Conferance.jpg" alt="Conferences & Summits" className="usecase-imageU" />
           <div className="usecase-contentU">
             <h3>Conferences & Summits</h3>
             <p className="text-style-3">
@@ -77,7 +77,7 @@ const Usecases = () => {
         </div>
 
         <div className="usecase-itemU right">
-          <img src="/image3.jpeg" alt="Corporate Gatherings" className="usecase-imageU" />
+          <img src="/Corporate.jpg" alt="Corporate Gatherings" className="usecase-imageU" />
           <div className="usecase-contentU">
             <h3>Corporate Gatherings</h3>
             <p className="text-style-4">

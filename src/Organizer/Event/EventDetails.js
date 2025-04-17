@@ -1,20 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import "./EventDetail.css";
-import {
-  TextField,
-  MenuItem,
-  Button,
-  Tabs,
-  Tab,
-  Box,
-  Typography,
-  Radio,
-  RadioGroup,
-  FormControlLabel,
-  Card,
-  CardMedia,
-} from "@mui/material";
+import { TextField, MenuItem, Button, Tabs, Tab, Box, Typography, Radio, RadioGroup, FormControlLabel, Card, CardMedia,} from "@mui/material";
 import { LocalizationProvider, DateTimePicker } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
@@ -151,7 +138,7 @@ const EventDetail = () => {
                 helperText="This will be used for your event page URL"
               />
 
-              <Box className="input-group">
+              <Box className="inputD-group">
                 <DateTimePicker
                   label="Start Date & Time *"
                   value={formData.startDate}
@@ -160,6 +147,7 @@ const EventDetail = () => {
                     <TextField {...params} className="fullD-width" margin="normal" InputLabelProps={{ shrink: true }} />
                   )}
                 />
+
                 <DateTimePicker
                   label="End Date & Time *"
                   value={formData.endDate}
@@ -305,7 +293,7 @@ const EventDetail = () => {
                 className="fullD-width"
                 label="Event Description"
                 multiline
-                rows={6}
+                rows={2}
                 variant="outlined"
                 margin="normal"
                 InputLabelProps={{ shrink: true }}
@@ -324,7 +312,7 @@ const EventDetail = () => {
                 className="fullD-width"
                 label="Event Description"
                 multiline
-                rows={6}
+                rows={2}
                 variant="outlined"
                 margin="normal"
                 InputLabelProps={{ shrink: true }}

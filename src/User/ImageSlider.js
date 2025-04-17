@@ -3,10 +3,10 @@ import { motion } from "framer-motion";
 import "./ImageSlider.css";
 
 const images = [
-  { src: "/lock.jpg", title: "Workshops, Trainings & Hackathons", content: "Passwale ensures smooth and professional management of workshops, trainings and hackathons, enhancing both the organizer and participant experience." },
-  { src: "/image2.jpeg", title: "Networking Events", content: "Create valuable connections and enhance professional relationships with seamless event management." },
-  { src: "/lock.jpg", title: "Conferences & Summits", content: "Plan and execute large-scale conferences with ease using our powerful event tools." },
-  { src: "/image3.jpeg", title: "Corporate Gatherings", content: "Organize corporate meetings, team-building activities, and celebrations effortlessly." },
+  { src: "/Workshop.jpeg", title: "Workshops, Trainings & Hackathons", content: "Passwale ensures smooth and professional management of workshops, trainings and hackathons, enhancing both the organizer and participant experience." },
+  { src: "/Network.jpg", title: "Networking Events", content: "Create valuable connections and enhance professional relationships with seamless event management." },
+  { src: "/Conferance.jpg", title: "Conferences & Summits", content: "Plan and execute large-scale conferences with ease using our powerful event tools." },
+  { src: "/Corporate.jpg", title: "Corporate Gatherings", content: "Organize corporate meetings, team-building activities, and celebrations effortlessly." },
   { src: "/Sportevent.jpeg", title: "Marathons & Sports Events", content: "Manage registrations, track participation, and ensure smooth execution of sports events." },
 ];
 

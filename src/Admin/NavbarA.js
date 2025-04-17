@@ -4,10 +4,10 @@ import { Dashboard, Event, People, Settings } from "@mui/icons-material"; // Imp
 import { Link, useLocation } from "react-router-dom";
 
 const menuItems = [
-  { text: "Dashboard", icon: <Dashboard />, path: "/" },
+  { text: "Dashboard", icon: <Dashboard />, path: "/admin" },
   { text: "Conferences", icon: <Event />, path: "/conferences" },
-  { text: "Users", icon: <People />, path: "/users" },
-  { text: "Settings", icon: <Settings />, path: "/settings" },
+  { text: "Users", icon: <People />, path: "/admin-users" },
+  { text: "Settings", icon: <Settings />, path: "/admin-settings" },
 ];
 
 function Navbar() {

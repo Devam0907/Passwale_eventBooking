@@ -15,7 +15,7 @@ const features = [
       "Monitor participant engagement metrics through comprehensive real-time analytics dashboards",
       "Ensure cross-platform compatibility across desktop, mobile, and tablet devices with responsive design"
     ],
-    img: "virtual-conf.png"
+    img: "virtual.jpg"
   },
   {
     title: "Speaker Management",
@@ -27,7 +27,7 @@ const features = [
       "Track speaker performance metrics including audience ratings and engagement statistics",
       "Coordinate travel logistics with integrated flight and hotel booking management systems"
     ],
-    img: "image2.jpeg"
+    img: "speaker.jpg"
   },
   {
     title: "Attendee Registration System",
@@ -39,7 +39,7 @@ const features = [
       "Enable bulk registration through CSV uploads and API integrations",
       "Automate badge printing with customizable templates and QR code integration"
     ],
-    img: "image1.jpg"
+    img: "Attedence.jpg"
   },
   {
     title: "Event Analytics Dashboard",
@@ -51,7 +51,7 @@ const features = [
       "Create custom reports with drag-and-drop data visualization tools",
       "Monitor social media mentions and hashtag performance in real-time"
     ],
-    img: "analytics-dash.png"
+    img: "EventAnalgtics.jpg"
   },
   {
     title: "Sponsor Management Suite",
@@ -63,7 +63,7 @@ const features = [
       "Monitor booth traffic patterns with IoT sensors and heatmap tracking",
       "Calculate ROI through lead conversion tracking and opportunity pipeline analysis"
     ],
-    img: "sponsor-mgmt.png"
+    img: "sponer.jpg"
   },
   {
     title: "Mobile Event App",
@@ -75,7 +75,7 @@ const features = [
       "Collect instant feedback through in-app surveys and rating systems",
       "Enable content access through offline mode and downloadable resources"
     ],
-    img: "mobile-app.png"
+    img: "Mobile.jpg"
   }
 ];
 
