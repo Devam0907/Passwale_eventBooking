@@ -1,0 +1,81 @@
+/* === Page wrapper === */
+.analytics-page {
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+  background-color: #f4f6f8;
+  min-height: 100vh;
+}
+
+/* === Content panel === */
+.content {
+  background-color: #ffffff;
+  max-width: 1200px;
+  margin: 16px auto 32px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  border-radius: 4px;
+}
+
+/* Section header (Analytics + Filter) */
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+.section-title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+  color: #333333;
+}
+.filter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.filter-icon {
+  font-size: 20px !important;
+  color: #e53935 !important;
+}
+.filter-text {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333333;
+}
+.filter-arrow {
+  font-size: 18px !important;
+  color: #333333 !important;
+}
+
+/* === Card grid === */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+/* === Individual cards === */
+.card {
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+  height: 200px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+.card-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #4c164e;
+  margin-bottom: 8px;
+}
+.card-placeholder {
+  margin-top: auto;
+  font-size: 12px;
+  color: #999999;
+  text-align: center;
+}

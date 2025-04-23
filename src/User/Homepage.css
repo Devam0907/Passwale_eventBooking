@@ -1,42 +1,42 @@
-.Homepage {
+.HomepageG {
   text-align: center;
   font-family: 'Arial', sans-serif;
   background: linear-gradient(135deg, #f3f4f6, #ffffff);
   min-height: 100vh;
 }
 
-.Hero-section {
+.Hero-sectionG {
   display: flex;
-  justify-content: center;
+  /* justify-content: center;
   align-items: center;
-  text-align: center;
+  text-align: center; */
   padding: 80px 20px;
 }
 
-.Hero-content {
+.Hero-contentG {
   max-width: 800px;
 }
 
-.Hero-title {
+.Hero-titleG {
   font-size: 3rem;
   font-weight: bold;
   margin-bottom: 20px;
   color: #002366;
 }
 
-.Hero-subtitle {
+.Hero-subtitleG {
   font-size: 1.2rem;
   color: #555;
   margin-bottom: 30px;
 }
 
-.Hero-buttons {
+.Hero-buttonsG {
   display: flex;
   justify-content: center;
   gap: 20px;
 }
 
-.Primary-button {
+.Primary-buttonG {
   background-color: #002366 !important;
   color: white !important;
   font-size: 1rem;
@@ -44,7 +44,7 @@
   border-radius: 5px;
 }
 
-.Secondary-button {
+.Secondary-buttonG {
   border-color: #002366 !important;
   color: #002366 !important;
   font-size: 1rem;

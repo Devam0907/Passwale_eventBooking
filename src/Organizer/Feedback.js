@@ -20,13 +20,13 @@ function Feedback() {
       </div>
 
       {/* Image Section */}
-      {/* <div className="image-section">
+      <div className="image-section">
         <img 
-          src="/image1.jpg" 
+          src="/feedbak.jpg" 
           alt="Feedback Dashboard Preview" 
           className="feedback-image"
         />
-      </div> */}
+      </div>
     </div>
   );
 }
