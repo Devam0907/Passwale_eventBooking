@@ -22,24 +22,25 @@ function Homepage() {
   
 
   return (
-    <div className="HomepageG">
-      <Navbar />
+    <div className="Homepage">
+    <Navbar />
 
-      <Container className="Hero-sectionG">
+    {/* Centered Hero Section */}
+    <Container className="Hero-sectionG">
         <Box className="Hero-contentG" textAlign="center">
-          <Typography variant="h3" className="Hero-title" gutterBottom>
+          <Typography variant="h3" className="Hero-titleG" gutterBottom>
             Elevate Your Event Experience
           </Typography>
           <Typography variant="h6" className="Hero-subtitleG" gutterBottom>
             A cutting-edge platform for event hosting, ticketing, and audience engagement.
           </Typography>
           <Box className="Hero-buttonsG" mt={3}>
-           <Button variant="contained" size="large" component={Link} to="/createEvent" className="Primary-buttonG">
-               Host an Event
-           </Button>
-           <Button variant="outlined" size="large" component={Link} to="/book-demo" className="Secondary-buttonG">
-               Book a Demo
-           </Button>
+            <Button variant="contained" size="large" component={Link} to="/createEvent" className="Primary-buttonG">
+              Host an Event
+            </Button>
+            <Button variant="outlined" size="large" component={Link} to="/book-demo" className="Secondary-buttonG">
+              Book a Demo
+            </Button>
           </Box>
         </Box>
       </Container>

@@ -100,7 +100,7 @@ function HeaderO() {
 
         {/* Center Section */}
         <div className="header-center">
-          <h1 className="event-title">react.js</h1>
+          <h1 className="event-titleO">react.js</h1>
           <div className="event-tags">
             <span className="tag active">Past</span>
             <span className="tag">In-Person</span>

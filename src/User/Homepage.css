@@ -1,20 +1,35 @@
-.HomepageG {
+.Homepage {
   text-align: center;
   font-family: 'Arial', sans-serif;
   background: linear-gradient(135deg, #f3f4f6, #ffffff);
   min-height: 100vh;
 }
 
-.Hero-sectionG {
+/* .Hero-sectionG {
   display: flex;
-  /* justify-content: center;
+  justify-content: center;
   align-items: center;
-  text-align: center; */
+  text-align: center;
   padding: 80px 20px;
 }
 
 .Hero-contentG {
   max-width: 800px;
+} */
+
+.Hero-sectionG {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 80px 20px;
+  width: 100%;
+  min-height: calc(50vh - 70px); /* Adjust based on navbar/footer height */
+}
+
+.Hero-contentG {
+  max-width: 800px;
+  margin: 0 auto; /* Ensures content stays centered */
 }
 
 .Hero-titleG {
