@@ -153,13 +153,13 @@ import Registration from "./User/Registration";
 import VerifyOTP from "./User/VerifyOTP";
 import ResetPassword from './User/ResetPassword';
 import Profile from "./User/Profile";
-import EditProfile from "./User/EditProfile";
 import Event from "./User/Event";
 import ViewDetails from './User/ViewDetails';
+import EditEvent from "./Organizer/Event/EditEvent";
 import Price from "./User/Price";
 import Feature from "./User/Feature";
 import Usecases from "./User/Usecases";
-import CreateEvent from "./CreateEvent";
+import CreateEvent from "./Organizer/CreateEvent";
 
 // Organizer components
 import Overview from "./Organizer/Overview";
@@ -270,7 +270,8 @@ function MainContent({ darkMode, setDarkMode }) {
             <Route path="/verify-otp" element={<VerifyOTP />} />
             <Route path="/reset-password/:token" element={<ResetPassword />} />
             <Route path="/events" element={<Event />} />
-            <Route path="/events/:eventTitle" element={<ViewDetails />} />
+            <Route path="/events/:id" element={<ViewDetails />} />
+            <Route path="/events/:id/edit" element={<EditEvent />} />
             <Route path="/pricing" element={<Price />} />
             <Route path="/features" element={<Feature />} />
             <Route path="/use-cases" element={<Usecases />} />
@@ -281,12 +282,6 @@ function MainContent({ darkMode, setDarkMode }) {
                 <Profile />
               </ProtectedRoute>
             } />
-
-            {/* <Route path="/profile" element={
-              <ProtectedRoute>
-                <Profile />
-              </ProtectedRoute>
-            } /> */}
 
             <Route path="/createEvent" element={
               <ProtectedRoute>
@@ -302,6 +297,11 @@ function MainContent({ darkMode, setDarkMode }) {
             } />
             <Route path="/event-details" element={
               <ProtectedRoute requiredRole="organizer">
+                <EventDetails />
+              </ProtectedRoute>
+            } />
+            <Route path="/event-details/:eventId" element={
+              <ProtectedRoute>
                 <EventDetails />
               </ProtectedRoute>
             } />

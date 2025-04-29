@@ -1,22 +1,48 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { CalendarMonth, LocationOn, Print, Close } from '@mui/icons-material';
-import { events } from './Event';
+import axios from 'axios';
 import Navbar from './Navbar';
-import Footer from './Footer';
+// import Footer from './Footer';
 import './ViewDetails.css';
 
 const ViewDetails = () => {
-  const { eventTitle } = useParams();
+  const { id } = useParams(); // Changed from eventTitle to id
   const navigate = useNavigate();
-  const decodedTitle = decodeURIComponent(eventTitle);
-  const event = events.find(e => e.title === decodedTitle);
+  const [event, setEvent] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const [showInvoice, setShowInvoice] = useState(false);
   const [ticketQuantity, setTicketQuantity] = useState(1);
-  const [userDetails, setUserDetails] = useState({ name: '', email: '', paymentMethod: '' });
+  const [userDetails, setUserDetails] = useState({
+    name: '',
+    email: '',
+    paymentMethod: ''
+  });
 
-  const ticketPrice = 1500;
+  // Fetch event data from backend
+  useEffect(() => {
+    const fetchEvent = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5000/api/events/${id}`);
+
+        if (response.data.success) {
+          setEvent(response.data.data);
+        } else {
+          throw new Error(response.data.message || 'Failed to load event');
+        }
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchEvent();
+  }, [id]);
+
+  const ticketPrice = event?.ticketTypes?.[0]?.price || 1500; // Use price from backend or default
   const gstPercentage = 18;
 
   const calculateTotal = () => {
@@ -27,14 +53,60 @@ const ViewDetails = () => {
   const handleBooking = () => setShowInvoice(true);
   const handlePrint = () => window.print();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!userDetails.paymentMethod) return alert('Please select a payment method');
-    alert('Booking confirmed! Check your email.');
-    setShowInvoice(false);
-    setUserDetails({ name: '', email: '', paymentMethod: '' });
-    setTicketQuantity(1);
+    if (!userDetails.paymentMethod) {
+      alert('Please select a payment method');
+      return;
+    }
+
+    try {
+      // Send booking data to backend
+      const response = await axios.post('http://localhost:5000/api/bookings', {
+        eventId: id,
+        userId: userDetails.email, // You might want to use actual user ID from auth
+        tickets: ticketQuantity,
+        paymentMethod: userDetails.paymentMethod,
+        totalAmount: calculateTotal()
+      });
+
+      if (response.data.success) {
+        alert('Booking confirmed! Check your email.');
+        setShowInvoice(false);
+        setUserDetails({ name: '', email: '', paymentMethod: '' });
+        setTicketQuantity(1);
+      } else {
+        throw new Error(response.data.message || 'Booking failed');
+      }
+    } catch (err) {
+      alert(`Error: ${err.message}`);
+    }
   };
+
+  if (loading) {
+    return (
+      <div className="event-details">
+        <Navbar />
+        <div className="event-container">
+          <h2>Loading...</h2>
+        </div>
+        {/* <Footer /> */}
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="event-details">
+        <Navbar />
+        <div className="event-container">
+          <h2>Error: {error}</h2>
+          <button onClick={() => navigate(-1)}>Back to Events</button>
+        </div>
+        {/* <Footer /> */}
+      </div>
+    );
+  }
 
   if (!event) {
     return (
@@ -42,8 +114,9 @@ const ViewDetails = () => {
         <Navbar />
         <div className="event-container">
           <h2>Event Not Found</h2>
+          <button onClick={() => navigate(-1)}>Back to Events</button>
         </div>
-        <Footer />
+        {/* <Footer /> */}
       </div>
     );
   }
@@ -54,23 +127,49 @@ const ViewDetails = () => {
       <div className="event-container">
         <div className="event-card">
           <div className="image-container">
-            <img src={event.image} alt={event.title} className="event-image" loading="lazy" />
+            <img
+              src={event.image || '/default-event.jpg'}
+              alt={event.name}
+              onError={(e) => {
+                e.target.src = '/default-event.jpg'; // Fallback if image fails to load
+              }}
+              className="event-image"
+              loading="lazy"
+            />
           </div>
           <div className="event-content">
-            <span className="event-badge">{event.type}</span>
-            <h1 className="event-title">{event.title}</h1>
+            <span className="event-badge">{event.eventType || 'Event'}</span>
+            <h1 className="event-title">{event.name}</h1>
             <div className="event-meta">
-              <div className="meta-item"><CalendarMonth />{event.date}</div>
-              <div className="meta-item"><LocationOn />{event.location}</div>
+              <div className="meta-item">
+                <CalendarMonth />
+                {new Date(event.startDate).toLocaleDateString()}
+              </div>
+              <div className="meta-item">
+                <LocationOn />
+                {event.location}
+              </div>
             </div>
             <p className="event-description">{event.description}</p>
             <div className="event-actions">
-              <button className="event-button button-primary" onClick={handleBooking}>Book Tickets Now</button>
-              <button className="event-button button-secondary" onClick={() => navigate(-1)}>Back to Events</button>
+              <button className="event-button button-primary" onClick={handleBooking}>
+                Book Tickets Now
+              </button>
+              <button className="event-button button-secondary" onClick={() => navigate(-1)}>
+                Back to Events
+              </button>
             </div>
           </div>
         </div>
       </div>
+      
+      <button
+        variant="contained"
+        onClick={() => navigate(`/events/${id}/edit`)}
+        sx={{ mr: 2 }}
+      >
+        Edit Event
+      </button>
 
       {showInvoice && (
         <div className="invoice-overlay">
@@ -92,80 +191,80 @@ const ViewDetails = () => {
                   <form onSubmit={handleSubmit}>
                     <div className="form-group">
                       <label>Full Name</label>
-                      <input type="text" required value={userDetails.name} onChange={e => setUserDetails({...userDetails, name: e.target.value})} />
+                      <input type="text" required value={userDetails.name} onChange={e => setUserDetails({ ...userDetails, name: e.target.value })} />
                     </div>
                     <div className="form-group">
                       <label>Email</label>
-                      <input type="email" required value={userDetails.email} onChange={e => setUserDetails({...userDetails, email: e.target.value})} />
+                      <input type="email" required value={userDetails.email} onChange={e => setUserDetails({ ...userDetails, email: e.target.value })} />
                     </div>
                   </form>
                 </div>
               </div>
 
               {/* Right Column: Payment Summary & Methods */}
-<div className="invoice-right">
-  {/* Payment Summary */}
-  <h3>Payment Summary</h3>
-  <div className="price-table">
-    <div className="price-row">
-      <span>Ticket Price:</span>
-      <span>₹{ticketPrice.toLocaleString('en-IN')}</span>
-    </div>
-    <div className="price-row">
-      <span>Quantity:</span>
-      <div className="quantity-controls">
-        <button
-          onClick={() => setTicketQuantity(Math.max(1, ticketQuantity - 1))}
-          disabled={ticketQuantity === 1}
-        >
-          −
-        </button>
-        <span>{ticketQuantity}</span>
-        <button onClick={() => setTicketQuantity(ticketQuantity + 1)}>
-          +
-        </button>
-      </div>
-    </div>
-    <div className="price-row">
-      <span>Subtotal:</span>
-      <span>₹{(ticketQuantity * ticketPrice).toLocaleString('en-IN')}</span>
-    </div>
-    <div className="price-row">
-      <span>GST ({gstPercentage}%):</span>
-      <span>₹{((ticketQuantity * ticketPrice * gstPercentage) / 100).toLocaleString('en-IN')}</span>
-    </div>
-    <div className="price-row total">
-      <span>Total Payable:</span>
-      <span>₹{calculateTotal().toLocaleString('en-IN')}</span>
-    </div>
-  </div>
+              <div className="invoice-right">
+                {/* Payment Summary */}
+                <h3>Payment Summary</h3>
+                <div className="price-table">
+                  <div className="price-row">
+                    <span>Ticket Price:</span>
+                    <span>₹{ticketPrice.toLocaleString('en-IN')}</span>
+                  </div>
+                  <div className="price-row">
+                    <span>Quantity:</span>
+                    <div className="quantity-controls">
+                      <button
+                        onClick={() => setTicketQuantity(Math.max(1, ticketQuantity - 1))}
+                        disabled={ticketQuantity === 1}
+                      >
+                        −
+                      </button>
+                      <span>{ticketQuantity}</span>
+                      <button onClick={() => setTicketQuantity(ticketQuantity + 1)}>
+                        +
+                      </button>
+                    </div>
+                  </div>
+                  <div className="price-row">
+                    <span>Subtotal:</span>
+                    <span>₹{(ticketQuantity * ticketPrice).toLocaleString('en-IN')}</span>
+                  </div>
+                  <div className="price-row">
+                    <span>GST ({gstPercentage}%):</span>
+                    <span>₹{((ticketQuantity * ticketPrice * gstPercentage) / 100).toLocaleString('en-IN')}</span>
+                  </div>
+                  <div className="price-row total">
+                    <span>Total Payable:</span>
+                    <span>₹{calculateTotal().toLocaleString('en-IN')}</span>
+                  </div>
+                </div>
 
-  {/* Payment Method Selection */}
-  <div className="payment-methods">
-    <h3>Payment Method</h3>
-    <div className="payment-options">
-      {['card', 'upi', 'netbanking'].map((method) => (
-        <div
-          key={method}
-          className={`payment-option ${userDetails.paymentMethod === method ? 'active' : ''}`}
-          onClick={() => setUserDetails({ ...userDetails, paymentMethod: method })}
-        >
-          <input
-            type="radio"
-            name="payment"
-            checked={userDetails.paymentMethod === method}
-            readOnly
-          />
-          {method === 'card'
-            ? 'Credit/Debit Card'
-            : method === 'upi'
-            ? 'UPI'
-            : 'Net Banking'}
-        </div>
-      ))}
-    </div>
-  </div>
-</div>
+                {/* Payment Method Selection */}
+                <div className="payment-methods">
+                  <h3>Payment Method</h3>
+                  <div className="payment-options">
+                    {['card', 'upi', 'netbanking'].map((method) => (
+                      <div
+                        key={method}
+                        className={`payment-option ${userDetails.paymentMethod === method ? 'active' : ''}`}
+                        onClick={() => setUserDetails({ ...userDetails, paymentMethod: method })}
+                      >
+                        <input
+                          type="radio"
+                          name="payment"
+                          checked={userDetails.paymentMethod === method}
+                          readOnly
+                        />
+                        {method === 'card'
+                          ? 'Credit/Debit Card'
+                          : method === 'upi'
+                            ? 'UPI'
+                            : 'Net Banking'}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
             <div className="invoice-actions">
               <button className="event-button button-primary" onClick={handleSubmit}>Pay ₹{calculateTotal()}</button>
@@ -175,7 +274,7 @@ const ViewDetails = () => {
         </div>
       )}
 
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };
