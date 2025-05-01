@@ -368,11 +368,13 @@ import UploadFileIcon from "@mui/icons-material/UploadFile";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { format } from 'date-fns';
+import axios from 'axios';
 
 const EventDetail = () => {
   const { id } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
+  const [event, setEvent] = useState(location.state?.event || null);
   const [loading, setLoading] = useState(!!id);
   const [error, setError] = useState(null);
   const [tabValue, setTabValue] = useState(0);
@@ -452,21 +454,20 @@ const EventDetail = () => {
   };
 
   useEffect(() => {
-    if (id) {
-      fetchEventData(id);
-    } else if (location.state?.formData) {
-      const { formData } = location.state;
-      setFormData(prev => ({
-        ...prev,
-        ...formData,
-        startDate: formData.startDate instanceof Date ? formData.startDate : new Date(formData.startDate),
-        endDate: formData.endDate instanceof Date ? formData.endDate : new Date(formData.endDate)
-      }));
-      setLoading(false);
-    } else {
-      setLoading(false);
+    if (!event) {
+      const fetchEvent = async () => {
+        try {
+          const response = await axios.get(`http://localhost:5000/api/events/${id}`);
+          setEvent(response.data);
+        } catch (err) {
+          setError(err.response?.data?.message || err.message || 'Failed to load event');
+        } finally {
+          setLoading(false);
+        }
+      };
+      fetchEvent();
     }
-  }, [id, location.state]);
+  }, [id, event]);
 
   const generateEventURL = (eventName) => {
     if (!eventName) return "";
@@ -596,21 +597,9 @@ const EventDetail = () => {
     setSnackbarOpen(false);
   };
 
-  if (loading) {
-    return (
-      <Box className="eventD-container" display="flex" justifyContent="center" alignItems="center">
-        <CircularProgress />
-      </Box>
-    );
-  }
-
-  if (error) {
-    return (
-      <Box className="eventD-container" display="flex" justifyContent="center" alignItems="center">
-        <Typography color="error">{error}</Typography>
-      </Box>
-    );
-  }
+  if (loading) return <CircularProgress />;
+  if (error) return <Typography color="error">{error}</Typography>;
+  if (!event) return <Typography>Event not found</Typography>;
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>

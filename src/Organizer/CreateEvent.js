@@ -394,7 +394,9 @@ import "./CreateEvent.css";
 const CreateEvent = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
-  const [formData, setFormData] = useState({
+  
+  // Initial form state
+  const initialFormState = {
     name: "",
     startDate: new Date(),
     endDate: new Date(new Date().setHours(new Date().getHours() + 2)),
@@ -408,9 +410,9 @@ const CreateEvent = () => {
     joinURL: "",
     description: "",
     image: null
-  });
+  };
 
-  const [tickets, setTickets] = useState([{
+  const initialTicketState = {
     title: "General Admission",
     price: 0,
     quantity: 100,
@@ -418,15 +420,17 @@ const CreateEvent = () => {
     startDate: new Date(),
     endDate: new Date(new Date().setHours(new Date().getHours() + 2)),
     soldOut: false
-  }]);
+  };
 
+  const [formData, setFormData] = useState(initialFormState);
+  const [tickets, setTickets] = useState([initialTicketState]);
   const [editingTicketIndex, setEditingTicketIndex] = useState(0);
   const [errorMessage, setErrorMessage] = useState("");
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [loading, setLoading] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [submitted, setSubmitted] = useState(false);
 
-  // Handle form field changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
@@ -444,30 +448,26 @@ const CreateEvent = () => {
     }));
   };
 
-  // Handle image upload
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (!file) return;
-  
-    // Check file type
+
     if (!file.type.startsWith('image/')) {
-      setErrorMessage('Only image files are allowed (JPEG, PNG)');
+      setErrorMessage('Only image files are allowed (JPG, JPEG, PNG)');
       setOpenSnackbar(true);
       return;
     }
-  
-    // Check file size (10MB)
+
     if (file.size > 10 * 1024 * 1024) {
       setErrorMessage('Image size must be less than 10MB');
       setOpenSnackbar(true);
       return;
     }
-  
+
     setSelectedImage(URL.createObjectURL(file));
     setFormData(prev => ({ ...prev, image: file }));
   };
 
-  // Handle ticket field changes
   const handleTicketChange = (e, index) => {
     const { name, value, type, checked } = e.target;
     setTickets(prev => prev.map((ticket, i) =>
@@ -479,27 +479,20 @@ const CreateEvent = () => {
     ));
   };
 
-  // Add a new ticket
   const handleAddTicket = () => {
     const newTicket = {
-      title: "New Ticket",
-      price: formData.eventType === "Free" ? 0 : "",
-      quantity: 100,
-      description: "",
+      ...initialTicketState,
       startDate: formData.startDate,
-      endDate: formData.endDate,
-      soldOut: false
+      endDate: formData.endDate
     };
     setTickets(prev => [...prev, newTicket]);
     setEditingTicketIndex(tickets.length);
   };
 
-  // Edit a ticket
   const handleEditTicket = (index) => {
     setEditingTicketIndex(index);
   };
 
-  // Delete a ticket
   const handleDeleteTicket = (index) => {
     if (tickets.length <= 1) {
       setErrorMessage("You must have at least one ticket type");
@@ -510,7 +503,6 @@ const CreateEvent = () => {
     setEditingTicketIndex(null);
   };
 
-  // Validate form inputs
   const validateForm = () => {
     const { name, startDate, endDate, eventType, eventMode, description } = formData;
 
@@ -555,7 +547,10 @@ const CreateEvent = () => {
     return null;
   };
 
-  const handleCreateEvent = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (submitted || loading) return;
+
     const validationMessage = validateForm();
     if (validationMessage) {
       setErrorMessage(validationMessage);
@@ -564,11 +559,11 @@ const CreateEvent = () => {
     }
 
     try {
+      setSubmitted(true);
       setLoading(true);
+      setErrorMessage('');
 
       const formPayload = new FormData();
-
-      // Append all form data
       formPayload.append('name', formData.name);
       formPayload.append('date', format(formData.startDate, 'yyyy-MM-dd'));
       formPayload.append('time', format(formData.startDate, 'HH:mm'));
@@ -576,19 +571,16 @@ const CreateEvent = () => {
       formPayload.append('eventMode', formData.eventMode);
       formPayload.append('description', formData.description);
 
-      // Handle location based on event mode
       if (formData.eventMode === "In-Person") {
         formPayload.append('location', `${formData.location}, ${formData.city}, ${formData.state}, ${formData.country}`);
       } else {
         formPayload.append('location', formData.joinURL);
       }
 
-      // Append image if exists
       if (formData.image) {
         formPayload.append('image', formData.image);
       }
 
-      // Append tickets
       formPayload.append('ticketTypes', JSON.stringify(
         tickets.map(ticket => ({
           name: ticket.title,
@@ -616,17 +608,24 @@ const CreateEvent = () => {
         }
       );
 
-      if (!response.data.success) {
+      if (!response.data.success || !response.data.event?._id) {
         throw new Error(response.data.message || 'Event creation failed');
       }
 
+      // Reset form and navigate
+      setFormData(initialFormState);
+      setTickets([initialTicketState]);
+      setSelectedImage(null);
+      setSubmitted(false);
+
       navigate(`/event-details/${response.data.event._id}`, {
+        replace: true,
         state: {
           event: response.data.event,
-          badgePath: response.data.badgePath,
-          badgePDFPath: response.data.badgePDFPath
+          navigationTime: Date.now()
         }
       });
+
     } catch (error) {
       console.error('Error creating event:', error);
       setErrorMessage(
@@ -635,6 +634,7 @@ const CreateEvent = () => {
         'Failed to create event. Please try again.'
       );
       setOpenSnackbar(true);
+      setSubmitted(false);
     } finally {
       setLoading(false);
     }
@@ -646,257 +646,248 @@ const CreateEvent = () => {
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
-      <Box className="Banner">
+      <Box component="form" onSubmit={handleSubmit} className="Banner">
         <Typography variant="h4" fontWeight="bold">
           Create Event
         </Typography>
         <Typography variant="body1" className="Banner-subtext">
           Provide basic event details to get started.
         </Typography>
-      </Box>
-
-      <Card className="event-cardCD">
-        <CardContent>
-          {/* Form Fields */}
-          <FormControl fullWidth sx={{ mb: 3 }}>
-            <TextField
-              label="Event Name *"
-              variant="outlined"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-            />
-          </FormControl>
-
-          <FormControl fullWidth sx={{ mb: 3 }}>
-            <TextField
-              label="Description *"
-              variant="outlined"
-              name="description"
-              value={formData.description}
-              onChange={handleChange}
-              multiline
-              rows={4}
-            />
-          </FormControl>
-
-          <Grid container spacing={3} sx={{ mb: 3 }}>
-            <Grid item xs={12} sm={6}>
-              <DateTimePicker
-                label="Starts On *"
-                value={formData.startDate}
-                onChange={(date) => setFormData({ ...formData, startDate: date })}
-                renderInput={(params) => <TextField {...params} fullWidth />}
+<br/>
+<br/>
+<br/>
+        <Card className="event-cardCD">
+          <CardContent>
+            <FormControl fullWidth sx={{ mb: 3 }}>
+              <TextField
+                label="Event Name *"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
               />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <DateTimePicker
-                label="Ends On *"
-                value={formData.endDate}
-                onChange={(date) => setFormData({ ...formData, endDate: date })}
-                renderInput={(params) => <TextField {...params} fullWidth />}
+            </FormControl>
+
+            <FormControl fullWidth sx={{ mb: 3 }}>
+              <TextField
+                label="Description *"
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+                multiline
+                rows={4}
               />
-            </Grid>
-          </Grid>
+            </FormControl>
 
-          <FormControl fullWidth sx={{ mb: 3 }}>
-            <InputLabel>Time Zone *</InputLabel>
-            <Select name="timeZone" value={formData.timeZone} onChange={handleChange}>
-              <MenuItem value="(GMT+5:30) Chennai, Kolkata, Mumbai, New Delhi">
-                (GMT+5:30) Chennai, Kolkata, Mumbai, New Delhi
-              </MenuItem>
-            </Select>
-          </FormControl>
-
-          <FormControl sx={{ mb: 3 }}>
-            <Typography>Event Type *</Typography>
-            <RadioGroup row name="eventType" value={formData.eventType} onChange={handleChange}>
-              <FormControlLabel value="Free" control={<Radio />} label="Free" />
-              <FormControlLabel value="Paid" control={<Radio />} label="Paid" />
-            </RadioGroup>
-          </FormControl>
-
-          <FormControl fullWidth sx={{ mb: 3 }}>
-            <InputLabel>Event Mode *</InputLabel>
-            <Select name="eventMode" value={formData.eventMode} onChange={handleChange}>
-              <MenuItem value="In-Person">In-Person</MenuItem>
-              <MenuItem value="Online">Online</MenuItem>
-            </Select>
-          </FormControl>
-
-          {formData.eventMode === "In-Person" && (
-            <Box sx={{ mt: 3 }}>
-              <FormControl fullWidth sx={{ mb: 3 }}>
-                <TextField
-                  label="Venue *"
-                  variant="outlined"
-                  name="location"
-                  value={formData.location}
-                  onChange={handleChange}
+            <Grid container spacing={3} sx={{ mb: 3 }}>
+              <Grid item xs={12} sm={6}>
+                <DateTimePicker
+                  label="Starts On *"
+                  value={formData.startDate}
+                  onChange={(date) => setFormData({ ...formData, startDate: date })}
+                  renderInput={(params) => <TextField {...params} fullWidth />}
                 />
-              </FormControl>
-
-              <Grid container spacing={3} sx={{ mb: 3 }}>
-                <Grid item xs={12} sm={4}>
-                  <FormControl fullWidth>
-                    <InputLabel>Country *</InputLabel>
-                    <Select name="country" value={formData.country} onChange={handleChange}>
-                      <MenuItem value="India">India</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12} sm={4}>
-                  <FormControl fullWidth>
-                    <InputLabel>State *</InputLabel>
-                    <Select name="state" value={formData.state} onChange={handleChange}>
-                      <MenuItem value="Gujarat">Gujarat</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12} sm={4}>
-                  <FormControl fullWidth>
-                    <InputLabel>City *</InputLabel>
-                    <Select name="city" value={formData.city} onChange={handleChange}>
-                      <MenuItem value="Ahmedabad">Ahmedabad</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Grid>
               </Grid>
-            </Box>
-          )}
-
-          {formData.eventMode === "Online" && (
-            <Box sx={{ mt: 3 }}>
-              <FormControl fullWidth sx={{ mb: 3 }}>
-                <TextField
-                  label="Join URL *"
-                  variant="outlined"
-                  name="joinURL"
-                  value={formData.joinURL}
-                  onChange={handleChange}
-                  placeholder="https://example.com/join"
+              <Grid item xs={12} sm={6}>
+                <DateTimePicker
+                  label="Ends On *"
+                  value={formData.endDate}
+                  onChange={(date) => setFormData({ ...formData, endDate: date })}
+                  renderInput={(params) => <TextField {...params} fullWidth />}
                 />
-              </FormControl>
-            </Box>
-          )}
+              </Grid>
+            </Grid>
 
-          {/* Tickets Section */}
-          <Box sx={{ mt: 3 }}>
-            <Stack direction="row" justifyContent="space-between" alignItems="center">
-              <Typography variant="h6">Tickets *</Typography>
-              <Button
-                variant="contained"
-                color="error"
-                size="small"
-                onClick={handleAddTicket}
-                startIcon={<AddIcon />}
-              >
-                New Ticket
-              </Button>
-            </Stack>
+            <FormControl fullWidth sx={{ mb: 3 }}>
+              <InputLabel>Time Zone *</InputLabel>
+              <Select name="timeZone" value={formData.timeZone} onChange={handleChange}>
+                <MenuItem value="(GMT+5:30) Chennai, Kolkata, Mumbai, New Delhi">
+                  (GMT+5:30) Chennai, Kolkata, Mumbai, New Delhi
+                </MenuItem>
+              </Select>
+            </FormControl>
 
-            {tickets.map((ticket, index) => (
-              <Card
-                key={index}
-                variant="outlined"
-                sx={{
-                  p: 2,
-                  my: 2,
-                  borderRadius: 2,
-                }}
-              >
-                <Grid container spacing={2}>
-                  <Grid item xs={12} sm={6}>
+            <FormControl sx={{ mb: 3 }}>
+              <Typography>Event Type *</Typography>
+              <RadioGroup row name="eventType" value={formData.eventType} onChange={handleChange}>
+                <FormControlLabel value="Free" control={<Radio />} label="Free" />
+                <FormControlLabel value="Paid" control={<Radio />} label="Paid" />
+              </RadioGroup>
+            </FormControl>
+
+            <FormControl fullWidth sx={{ mb: 3 }}>
+              <InputLabel>Event Mode *</InputLabel>
+              <Select name="eventMode" value={formData.eventMode} onChange={handleChange}>
+                <MenuItem value="In-Person">In-Person</MenuItem>
+                <MenuItem value="Online">Online</MenuItem>
+              </Select>
+            </FormControl>
+
+            {formData.eventMode === "In-Person" && (
+              <Box sx={{ mt: 3 }}>
+                <FormControl fullWidth sx={{ mb: 3 }}>
+                  <TextField
+                    label="Venue *"
+                    name="location"
+                    value={formData.location}
+                    onChange={handleChange}
+                  />
+                </FormControl>
+
+                <Grid container spacing={3} sx={{ mb: 3 }}>
+                  <Grid item xs={12} sm={4}>
                     <TextField
                       fullWidth
-                      label="Ticket Name *"
-                      name="title"
-                      value={ticket.title}
-                      onChange={(e) => handleTicketChange(e, index)}
-                      sx={{ mb: 2 }}
-                    />
-                    <TextField
-                      fullWidth
-                      label="Description"
-                      name="description"
-                      value={ticket.description}
-                      onChange={(e) => handleTicketChange(e, index)}
-                      multiline
-                      rows={2}
-                      sx={{ mb: 2 }}
+                      label="Country *"
+                      name="country"
+                      value={formData.country}
+                      onChange={handleChange}
                     />
                   </Grid>
-                  <Grid item xs={12} sm={6}>
-                    {formData.eventType === "Paid" && (
+                  <Grid item xs={12} sm={4}>
+                    <TextField
+                      fullWidth
+                      label="State *"
+                      name="state"
+                      value={formData.state}
+                      onChange={handleChange}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={4}>
+                    <TextField
+                      fullWidth
+                      label="City *"
+                      name="city"
+                      value={formData.city}
+                      onChange={handleChange}
+                    />
+                  </Grid>
+                </Grid>
+              </Box>
+            )}
+
+            {formData.eventMode === "Online" && (
+              <Box sx={{ mt: 3 }}>
+                <FormControl fullWidth sx={{ mb: 3 }}>
+                  <TextField
+                    label="Join URL *"
+                    name="joinURL"
+                    value={formData.joinURL}
+                    onChange={handleChange}
+                    placeholder="https://example.com/join"
+                  />
+                </FormControl>
+              </Box>
+            )}
+
+            <Box sx={{ mt: 3 }}>
+              <Stack direction="row" justifyContent="space-between" alignItems="center">
+                <Typography variant="h6">Tickets *</Typography>
+                <Button
+                  variant="contained"
+                  color="error"
+                  size="small"
+                  onClick={handleAddTicket}
+                  startIcon={<AddIcon />}
+                >
+                  New Ticket
+                </Button>
+              </Stack>
+
+              {tickets.map((ticket, index) => (
+                <Card key={index} variant="outlined" sx={{ p: 2, my: 2, borderRadius: 2 }}>
+                  <Grid container spacing={2}>
+                    <Grid item xs={12} sm={6}>
                       <TextField
                         fullWidth
-                        label="Price (₹) *"
-                        name="price"
-                        type="number"
-                        value={ticket.price}
+                        label="Ticket Name *"
+                        name="title"
+                        value={ticket.title}
                         onChange={(e) => handleTicketChange(e, index)}
                         sx={{ mb: 2 }}
                       />
-                    )}
-                    <TextField
-                      fullWidth
-                      label="Quantity"
-                      name="quantity"
-                      type="number"
-                      value={ticket.quantity}
-                      onChange={(e) => handleTicketChange(e, index)}
-                      sx={{ mb: 2 }}
-                    />
-                    <Box display="flex" alignItems="center" justifyContent="space-between">
-                      <Box display="flex" alignItems="center">
-                        <Checkbox
-                          name="soldOut"
-                          checked={ticket.soldOut}
+                      <TextField
+                        fullWidth
+                        label="Description"
+                        name="description"
+                        value={ticket.description}
+                        onChange={(e) => handleTicketChange(e, index)}
+                        multiline
+                        rows={2}
+                        sx={{ mb: 2 }}
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      {formData.eventType === "Paid" && (
+                        <TextField
+                          fullWidth
+                          label="Price (₹) *"
+                          name="price"
+                          type="number"
+                          value={ticket.price}
                           onChange={(e) => handleTicketChange(e, index)}
-                          size="small"
+                          sx={{ mb: 2 }}
                         />
-                        <Typography variant="body2">Sold Out</Typography>
+                      )}
+                      <TextField
+                        fullWidth
+                        label="Quantity"
+                        name="quantity"
+                        type="number"
+                        value={ticket.quantity}
+                        onChange={(e) => handleTicketChange(e, index)}
+                        sx={{ mb: 2 }}
+                      />
+                      <Box display="flex" alignItems="center" justifyContent="space-between">
+                        <Box display="flex" alignItems="center">
+                          <Checkbox
+                            name="soldOut"
+                            checked={ticket.soldOut}
+                            onChange={(e) => handleTicketChange(e, index)}
+                            size="small"
+                          />
+                          <Typography variant="body2">Sold Out</Typography>
+                        </Box>
+                        <Box>
+                          <IconButton onClick={() => handleEditTicket(index)}>
+                            <EditIcon color="primary" />
+                          </IconButton>
+                          <IconButton onClick={() => handleDeleteTicket(index)}>
+                            <DeleteIcon color="error" />
+                          </IconButton>
+                        </Box>
                       </Box>
-                      <Box>
-                        <IconButton onClick={() => handleEditTicket(index)}>
-                          <EditIcon color="primary" />
-                        </IconButton>
-                        <IconButton onClick={() => handleDeleteTicket(index)}>
-                          <DeleteIcon color="error" />
-                        </IconButton>
-                      </Box>
-                    </Box>
+                    </Grid>
                   </Grid>
-                </Grid>
-              </Card>
-            ))}
-          </Box>
+                </Card>
+              ))}
+            </Box>
 
-          <Grid container justifyContent="flex-end">
-            <Grid item>
-              <Button
-                variant="contained"
-                className="primary-button1"
-                sx={{ mt: 2 }}
-                onClick={handleCreateEvent}
-                disabled={loading}
-              >
-                {loading ? 'Creating...' : 'Create Event'}
-              </Button>
+            <Grid container justifyContent="flex-end">
+              <Grid item>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  className="primary-button1"
+                  sx={{ mt: 2 }}
+                  disabled={loading}
+                >
+                  {loading ? 'Creating...' : 'Create Event'}
+                </Button>
+              </Grid>
             </Grid>
-          </Grid>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
 
-      <Snackbar
-        open={openSnackbar}
-        autoHideDuration={6000}
-        onClose={handleCloseSnackbar}
-      >
-        <Alert severity="error" onClose={handleCloseSnackbar}>
-          {errorMessage}
-        </Alert>
-      </Snackbar>
+        <Snackbar
+          open={openSnackbar}
+          autoHideDuration={6000}
+          onClose={handleCloseSnackbar}
+        >
+          <Alert severity="error" onClose={handleCloseSnackbar}>
+            {errorMessage}
+          </Alert>
+        </Snackbar>
+      </Box>
     </LocalizationProvider>
   );
 };

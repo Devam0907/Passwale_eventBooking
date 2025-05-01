@@ -197,8 +197,8 @@
 //   };
 
 //   return (
-//     <div>
-//       <Navbar />
+    // <div>
+    //   <Navbar />
 //       <Container className="event-container1">
 //              <Typography variant="h4" className="event-title1">Discover Events</Typography>
 //        <Typography variant="body1" className="event-description1">
@@ -273,6 +273,8 @@ import IconButton from '@mui/material/IconButton';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import { useNavigate } from 'react-router-dom';
+import Navbar from "./Navbar";
+import Footer from "./Footer";
 import './Event.css';
 
 function Event() {
@@ -356,6 +358,10 @@ function Event() {
   }
 
   return (
+    <div>
+      <Navbar />
+      <br/>
+      <br/><br/>
     <Container sx={{ py: 4 }}>
       <Box sx={{ mb: 4 }}>
         <Typography variant="h4" gutterBottom>Discover Events</Typography>
@@ -368,7 +374,7 @@ function Event() {
           sx={{ mb: 2 }}
         />
         <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
-          {["All", "Conference", "Summit", "Meetup"].map(category => (
+          {["All"].map(category => (
             <Chip
               key={category}
               label={category}
@@ -425,6 +431,8 @@ function Event() {
         )}
       </Grid>
     </Container>
+      <Footer />
+           </div>
   );
 }
 

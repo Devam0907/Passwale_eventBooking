@@ -5,6 +5,7 @@ import axios from 'axios';
 import Navbar from './Navbar';
 // import Footer from './Footer';
 import './ViewDetails.css';
+import { format, parseISO, isValid } from 'date-fns';
 
 const ViewDetails = () => {
   const { id } = useParams(); // Changed from eventTitle to id
@@ -62,7 +63,7 @@ const ViewDetails = () => {
 
     try {
       // Send booking data to backend
-      const response = await axios.post('http://localhost:5000/api/bookings', {
+      const response = await axios.post('http://localhost:5000/api/events/bookings', {
         eventId: id,
         userId: userDetails.email, // You might want to use actual user ID from auth
         tickets: ticketQuantity,
@@ -81,6 +82,20 @@ const ViewDetails = () => {
     } catch (err) {
       alert(`Error: ${err.message}`);
     }
+  };
+
+  const formatEventDate = (dateString) => {
+    if (!dateString) return "Date not available";
+    
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) return "Invalid date";
+  
+    // Format as DD/MM/YYYY (matches your event cards)
+    return date.toLocaleDateString("en-GB", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric"
+    });
   };
 
   if (loading) {
@@ -143,7 +158,7 @@ const ViewDetails = () => {
             <div className="event-meta">
               <div className="meta-item">
                 <CalendarMonth />
-                {new Date(event.startDate).toLocaleDateString()}
+                {formatEventDate(event.datetime)}  {/* Changed from startDate to datetime */}
               </div>
               <div className="meta-item">
                 <LocationOn />
@@ -162,7 +177,7 @@ const ViewDetails = () => {
           </div>
         </div>
       </div>
-      
+
       <button
         variant="contained"
         onClick={() => navigate(`/events/${id}/edit`)}

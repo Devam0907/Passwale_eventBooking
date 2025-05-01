@@ -301,10 +301,12 @@ function MainContent({ darkMode, setDarkMode }) {
               </ProtectedRoute>
             } />
             <Route path="/event-details/:eventId" element={
-              <ProtectedRoute>
+              <ProtectedRoute requiredRole="organizer">
                 <EventDetails />
               </ProtectedRoute>
             } />
+            {/* <Route path="/event-details/:id/" element={<Navigate to="../event-details/:id" replace />} /> */}
+
             <Route path="/analytics" element={
               <ProtectedRoute requiredRole="organizer">
                 <Analytics />

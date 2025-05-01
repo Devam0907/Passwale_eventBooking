@@ -13,13 +13,18 @@ import {
 import { DateTimePicker } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { format } from "date-fns";
+import { format } from 'date-fns';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 const EditEvent = () => {
     const { id } = useParams();
     const navigate = useNavigate();
-    const [event, setEvent] = useState(null);
+    const [event, setEvent] = useState({
+        name: '',
+        description: '',
+        location: '',
+        datetime: new Date()
+    });
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [image, setImage] = useState(null);
@@ -31,13 +36,12 @@ const EditEvent = () => {
             try {
                 const response = await axios.get(`http://localhost:5000/api/events/${id}`);
                 if (response.data.success) {
-                    const eventData = {
+                    setEvent({
                         ...response.data.data,
                         datetime: response.data.data.datetime ? 
                             new Date(response.data.data.datetime) : 
                             new Date()
-                    };
-                    setEvent(eventData);
+                    });
 
                     if (response.data.data.image) {
                         setPreviewImage(
@@ -54,7 +58,6 @@ const EditEvent = () => {
 
         fetchEvent();
 
-        // Clean up the object URL to avoid memory leaks
         return () => {
             if (previewImage) {
                 URL.revokeObjectURL(previewImage);
@@ -64,42 +67,31 @@ const EditEvent = () => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setEvent(prev => ({
-            ...prev,
-            [name]: value
-        }));
+        setEvent(prev => ({ ...prev, [name]: value }));
     };
 
     const handleDateChange = (date) => {
-        setEvent(prev => ({
-            ...prev,
-            datetime: date
-        }));
+        setEvent(prev => ({ ...prev, datetime: date }));
     };
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
         if (file) {
-            // Validate file type
             if (!file.type.match('image.*')) {
                 setError('Only image files are allowed');
                 return;
             }
             
-            // Validate file size
-            if (file.size > 10 * 1024 * 1024) { // 10MB
-                setError('Image must be smaller than 10MB');
+            if (file.size > 50 * 1024 * 1024) {
+                setError('Image must be smaller than 50MB');
                 return;
             }
 
-            // Revoke previous object URL if exists
-            if (previewImage) {
-                URL.revokeObjectURL(previewImage);
-            }
+            if (previewImage) URL.revokeObjectURL(previewImage);
 
             setImage(file);
             setPreviewImage(URL.createObjectURL(file));
-            setError(null); // Clear any previous errors
+            setError(null);
         }
     };
 
@@ -110,33 +102,25 @@ const EditEvent = () => {
         
         try {
             // Validate required fields
-            const requiredFields = {
-                name: event?.name?.trim(),
-                location: event?.location?.trim(),
-                datetime: event?.datetime
-            };
-
-            const missingFields = Object.entries(requiredFields)
-                .filter(([_, value]) => !value)
-                .map(([field]) => field);
-
-            if (missingFields.length > 0) {
-                throw new Error(`Missing required fields: ${missingFields.join(', ')}`);
+            if (!event.name || !event.location || !event.datetime) {
+                throw new Error('Name, location, and date are required');
             }
 
             const formData = new FormData();
             const date = new Date(event.datetime);
-            
-            // Add form data
-            formData.append('name', requiredFields.name);
+            formData.append('name', event.name.trim());
             formData.append('description', event.description?.trim() || '');
-            formData.append('location', requiredFields.location);
-            formData.append('date', format(date, 'yyyy-MM-dd'));
-            formData.append('time', format(date, 'HH:mm'));
+            formData.append('location', event.location.trim());
+            formData.append('date', format(event.datetime, 'yyyy-MM-dd'));
+            formData.append('time', format(event.datetime, 'HH:mm'));
 
-            // Add image if exists
             if (image) {
                 formData.append('image', image);
+            }
+
+            console.log('Submitting form data:');
+            for (let [key, value] of formData.entries()) {
+                console.log(key, value);
             }
 
             const response = await axios.put(
@@ -157,11 +141,12 @@ const EditEvent = () => {
                 });
             }
         } catch (err) {
-            console.error('Submission failed:', {
-                error: err,
-                response: err.response
+            console.error('Submission error:', {
+                message: err.message,
+                response: err.response?.data,
+                stack: err.stack
             });
-
+            
             setError(
                 err.response?.data?.message || 
                 err.message || 
@@ -283,7 +268,7 @@ const EditEvent = () => {
                         />
                     </Button>
                     <Typography variant="caption" display="block" sx={{ mt: 1 }}>
-                        Max file size: 10MB (JPEG, PNG, GIF)
+                        Max file size: 50MB (JPG, JPEG, PNG, GIF)
                     </Typography>
                 </Box>
                 
